@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="tab-content ng-scope">
+<!-- ngInclude: currentTab --><div class="tab-pane active ng-scope" ng-include="currentTab"><form class="form-horizontal tab-form ng-pristine ng-valid ng-scope" ng-controller="DocsCtrl" ng-submit="save(docsForm.$valid)" novalidate="" name="docsForm">
+  <div class="form-group has-feedback" ng-class="{ 'has-error': (docsForm.name.$invalid &amp;&amp;docsForm.name.$touched) }">
+    <label for="name" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10" ng-switch="" on="editable">
+        <!-- ngSwitchWhen: false --><pre ng-switch-when="false" class="ng-binding ng-scope">Videofinder Items per last modified month YYYYMM</pre><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: true -->
+    </div>
+  </div>
+  <div class="form-group has-feedback" ng-class="{ 'has-error': (docsForm.description.$invalid &amp;&amp; docsForm.description.$touched) }">
+    <label for="query" class="col-sm-2 control-label">Description</label>
+    <div class="col-sm-10" ng-switch="" on="editable">
+        <!-- ngSwitchWhen: false --><pre ng-switch-when="false" class="ng-binding ng-scope">Number of Videofinder items grouped by last modified date YYYYMM</pre><!-- end ngSwitchWhen: -->
+        
+        <!-- ngSwitchWhen: true -->
+    </div>
+  </div>
+  <div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <span ng-switch="" on="editable">
+    <!-- ngSwitchWhen: true -->
+    <!-- ngSwitchWhen: true -->
+    <!-- ngSwitchWhen: false --><!-- ngIf: docs.createdBy == user.username --><!-- end ngSwitchWhen: -->
+    </span>
+  </div>
+  </div>
+</form>
+</div>
+</div>
+{% endblock %}

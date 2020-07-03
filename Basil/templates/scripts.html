@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="tab-content ng-scope">
+<!-- ngInclude: currentTab --><div class="tab-pane active ng-scope" ng-include="currentTab"><div ng-controller="ViewsCtrl" class="ng-scope">
+<!-- ngIf: api.createdBy == user.username -->
+
+<!-- ngRepeat: view in views -->
+<!-- ngIf: !views.length && api.createdBy != user.username --><div ng-if="!views.length &amp;&amp; api.createdBy != user.username" class="ng-scope"><p class=""><span class="glyphicon glyphicon-info-sign"></span> There are no scripts.</p></div><!-- end ngIf: !views.length && api.createdBy != user.username -->
+</div>
+</div>
+</div>
+
+
+{% endblock %}

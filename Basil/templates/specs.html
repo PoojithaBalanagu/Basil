@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="tab-pane active ng-scope" ng-include="currentTab">
+<form class="form-horizontal tab-form ng-pristine ng-valid ng-scope" ng-controller="SpecCtrl" ng-submit="save(specForm.$valid)" novalidate="" name="specForm">
+  <div class="form-group has-feedback" ng-class="{ 'has-error': (specForm.endpoint.$invalid &amp;&amp; specForm.endpoint.$touched)}">
+    <label for="endpoint" class="col-sm-2 control-label">SPARQL Endpoint</label>
+    <div class="col-sm-10 controls" ng-switch="" on="editable">
+        <!-- ngSwitchWhen: false --><pre ng-switch-when="false" class="ng-binding ng-scope">http://data.open.ac.uk/sparql</pre><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: true -->
+    </div>
+  </div>
+  <div class="form-group" ng-class="{ 'has-error': (specForm.query.$invalid &amp;&amp; specForm.query.$touched)}">
+    <label for="query" class="col-sm-2 control-label">Query</label>
+    <div class="col-sm-10" ng-switch="" on="editable">
+        <!-- ngSwitchWhen: true -->
+        <!-- ngSwitchWhen: false --><pre class="pesto-code ng-binding ng-scope" ng-switch-when="false">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
+
+SELECT (count(?sub) as ?number) ?feed
+FROM &lt;http://data.open.ac.uk/context/videofinder&gt;
+WHERE {
+  ?sub a &lt;http://data.open.ac.uk/videofinder/ontology/VideofinderObject&gt; .
+  ?sub dct:modified ?obj .
+  BIND(CONCAT(STR(YEAR(?obj)),STR(MONTH(?obj))) as ?feed) .
+} group by ?feed ORDER BY DESC(?number)</pre><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: true -->
+    </div>
+  </div>
+  <div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <button type="submit" class="btn btn-outline-secondary">Submit</button>
+    <span ng-switch="" on="editable">
+    <!-- ngSwitchWhen: true -->
+    <!-- ngSwitchWhen: true -->
+    <!-- ngSwitchWhen: false --><!-- ngIf: user.username == spec.createdBy --><!-- end ngSwitchWhen: -->
+    </span>
+  </div>
+  </div>
+</form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="pesto" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>basil</title>
+  <meta name="description" content="basil - Building Apis SImpLy from sparql endpoints">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/css/normalize.css">
+  <link rel="stylesheet" href="static/css/main.css">
+  <link href="css/fonts.css" rel='stylesheet' type='text/css'>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="static/css/app.css">
+  
+  <!-- Twitter -->
+  <link rel="me" href="https://twitter.com/basilapi"></link>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+              <nav class="navbar  navbar-default">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="pesto-navbar-right">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/collection"><i class="glyphicon glyphicon-leaf"></i> <b>BASIL</b> - Sharing and Reusing SPARQL Queries as Web APIs</a>
+                  </div>
+
+<!--                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                    <ul class="nav navbar-nav">
+                      <li class="active"><a href="#/collection">Collection <span class="sr-only">(current)</span></a> </li>
+                      <li><a href="#/view2">view 2</a></li> 
+                       <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Action</a></li>
+                          <li><a href="#">Another action</a></li>
+                          <li><a href="#">Something else here</a></li>
+                          <li class="divider"></li>
+                          <li><a href="#">Separated link</a></li>
+                          <li class="divider"></li>
+                          <li><a href="#">One more separated link</a></li>
+                        </ul>
+                      </li> 
+                    </ul>-->
+					<div class="collapse navbar-collapse" id="pesto-navbar-right">
+                    <ul class="pesto-user-menu nav navbar-nav navbar-right" ng-controller="UserCtrl">
+                      <li class="pesto-seed"><a title="Seed a query..." ng-click="plus()"><span class="glyphicon glyphicon-plus"></span> Seed</a></li>
+                      <li><a ng-click="action()" ><span ng-model="user.username"></span></a></li>
+                    </ul>
+                    </div>
+                  </div>
+
+              </nav>
+            <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <div ng-view="" class="pesto-view ng-scope">
+      <h2 class="ng-binding ng-scope">Videofinder Items per last modified month YYYYMM<br>
+    <!-- ngIf: api.title != api.id --><small ng-if="api.title != api.id" class="ng-binding ng-scope">basil:vbq95b66kkf6</small><!-- end ngIf: api.title != api.id --><br>
+    <small>
+    <!-- ngInclude: 'basil/actions.html' --><span ng-include="'basil/actions.html'" class="ng-scope"><span class="ng-scope">
+          <a target="_blank" class="btn btn-xs btn-warning" href="http://basil.kmi.open.ac.uk/basil/vbq95b66kkf6/api-docs">
+            <span class="glyphicon glyphicon-play"></span>
+          </a>
+          
+          <!-- ngIf: api.createdBy == user.username -->
+    </span></span>
+    </small>
+    </h2>
+  </div>
+
+
+
+<!--ul class="nav nav-tabs ng-scope">
+  <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-include="'basil/tab.html'" class="ng-scope active"><a ng-click="onClickTab(tab)" class="ng-binding ng-scope">Specification</a></li><li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-include="'basil/tab.html'" class="ng-scope"><a ng-click="onClickTab(tab)" class="ng-binding ng-scope">Description</a></li><li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-include="'basil/tab.html'" class="ng-scope"><a ng-click="onClickTab(tab)" class="ng-binding ng-scope">Scripts</a></li>
+</ul-->
+<ul class="nav nav-tabs">
+  <li role="presentation" {% if page == '1' %}class="active"{% endif %}><a href="{{ url_for('specs') }}">Specification</a></li>
+  <li role="presentation" {% if page == '2' %}class="active"{% endif %}"><a href="{{ url_for('desc') }}">Description</a></li>
+  <li role="presentation" {% if page == '3' %}class="active"{% endif %}"><a href="{{ url_for('scripts') }}">Scripts</a></li>
+</ul>
+<!--ul class="nav nav-tabs ng-scope">
+<div class="btn-group" role="group" aria-label="...">
+  <button type="button" class="btn btn-default"><a href="{{ url_for('specs') }}">Specification</a></button>
+  <button type="button" class="btn btn-default"><a href="{{ url_for('desc') }}">Description</a></button>
+  <button type="button" class="btn btn-default"><a href="{{ url_for('scripts') }}">Scripts</a></button>
+</div>
+</ul-->
+
+{% block content %}
+{% endblock %}
+
+
+<!--div class="tab-pane active ng-scope" ng-include="currentTab">
+<form class="form-horizontal tab-form ng-pristine ng-valid ng-scope" ng-controller="SpecCtrl" ng-submit="save(specForm.$valid)" novalidate="" name="specForm">
+  <div class="form-group has-feedback" ng-class="{ 'has-error': (specForm.endpoint.$invalid &amp;&amp; specForm.endpoint.$touched)}">
+    <label for="endpoint" class="col-sm-2 control-label">SPARQL Endpoint</label>
+    <div class="col-sm-10 controls" ng-switch="" on="editable">
+       <pre ng-switch-when="false" class="ng-binding ng-scope">http://data.open.ac.uk/sparql</pre>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{ 'has-error': (specForm.query.$invalid &amp;&amp; specForm.query.$touched)}">
+    <label for="query" class="col-sm-2 control-label">Query</label>
+    <div class="col-sm-10" ng-switch="" on="editable">
+        <pre class="pesto-code ng-binding ng-scope" ng-switch-when="false">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
+
+SELECT (count(?sub) as ?number) ?feed
+FROM &lt;http://data.open.ac.uk/context/videofinder&gt;
+WHERE {
+  ?sub a &lt;http://data.open.ac.uk/videofinder/ontology/VideofinderObject&gt; .
+  ?sub dct:modified ?obj .
+  BIND(CONCAT(STR(YEAR(?obj)),STR(MONTH(?obj))) as ?feed) .
+} group by ?feed ORDER BY DESC(?number)</pre>
+    </div>
+  </div>
+  <div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <button type="submit" class="btn btn-outline-secondary">Submit</button>
+    <span ng-switch="" on="editable">
+    </span>
+  </div>
+  </div>
+</form>
+</div-->
+<div class="container" role="main">
+  <div ng-controller="MessageCtrl" class="pesto-messages" ng-include="'error/message.html'"></div>
+  <div ng-view class="pesto-view"></div>
+</div>
+
+  <div class="pesto-footer">
+  basil - Building Apis SImpLy from sparql endpoints
+  <br/>
+
+<br/>
+*<br/>
+  pesto v<span app-version></span>
+  
+  </div>
+
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <!--script src="js/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  
+  <script src="settings.basil.js"></script>
+  
+  <script src="app.js"></script>
+  <script src="components/utils/utils.js"></script>
+  <script src="error/error.js"></script>
+  <script src="collection/collection.js"></script>
+  <script src="search/search.js"></script>
+  <script src="basil/basil.js"></script>
+  <script src="account/account.js"></script>
+  
+  <script src="components/tabs/tabs.js"></script>
+  
+  <script src="components/user/user.js"></script>
+  <script src="components/user/user-directive.js"></script>
+  <script src="components/user/interpolate-filter.js"></script>
+  
+  <script src="components/validators/validators.js"></script>
+  
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script-->
+</body>
+</html>
